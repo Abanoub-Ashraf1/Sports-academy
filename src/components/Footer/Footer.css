@@ -1,0 +1,12 @@
+.site-footer {
+  padding: 24px 0;
+  background: #0b1220;
+  color: #ffffff;
+  text-align: center;
+}
+
+.site-footer .footer-inner p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.85;
+}

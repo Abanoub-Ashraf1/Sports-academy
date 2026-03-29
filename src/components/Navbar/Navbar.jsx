@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react";
 import "./Navbar.css";
+import { useLanguage } from "../../contexts/LanguageProvider";
 
-const navLinks = [
-  { label: "Home", href: "#hero" },
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Contact", href: "#contact" },
-];
+// navLabels will be read from translations inside component
 
 export default function Navbar() {
+  const { t, lang, setLang } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("#hero");
+
+  const navLinks = [
+    { label: t("nav.home"), href: "#hero" },
+    { label: t("nav.about"), href: "#about" },
+    { label: t("nav.services"), href: "#services" },
+    { label: t("nav.gallery"), href: "#gallery" },
+    { label: t("nav.testimonials"), href: "#testimonials" },
+    { label: t("nav.contact"), href: "#contact" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,12 +44,12 @@ export default function Navbar() {
           >
             <img
               src="/images/academy_logo.jpeg"
-              alt="National Sports Academy"
+              alt={t("logo.sub")}
               className="logo-img"
             />
             <div className="logo-text">
               <span className="logo-main">NSA</span>
-              <span className="logo-sub">National Sports Academy</span>
+              <span className="logo-sub">{t("logo.sub")}</span>
             </div>
           </a>
 
@@ -70,8 +74,17 @@ export default function Navbar() {
             className="navbar-cta btn-primary"
             onClick={() => handleNavClick("#contact")}
           >
-            <span>Book Now</span>
+            <span>{t("cta.book_now")}</span>
           </a>
+
+          {/* Language toggle */}
+          <button
+            className="lang-toggle"
+            onClick={() => setLang(lang === "en" ? "ar" : "en")}
+            aria-label="Toggle language"
+          >
+            {lang === "en" ? "ع" : "EN"}
+          </button>
 
           {/* ---- Hamburger ---- */}
           <button
@@ -106,7 +119,7 @@ export default function Navbar() {
               className="btn-primary mobile-cta"
               onClick={() => handleNavClick("#contact")}
             >
-              <span>Book a Session</span>
+              <span>{t("cta.book_session")}</span>
             </a>
           </li>
         </ul>

@@ -35,7 +35,10 @@
 /* ---- Slider Cards ---- */
 .slider-card {
   flex-shrink: 0;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.45s ease;
+  will-change: transform, opacity;
 }
 
 .slider-card-active {
@@ -92,7 +95,13 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.6s ease;
+  transition:
+    transform 0.45s ease,
+    opacity 0.45s ease;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  aspect-ratio: 4 / 3;
 }
 
 .gallery-card.active:hover .gallery-card-img {

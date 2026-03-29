@@ -1,14 +1,11 @@
 import React from "react";
 import "./About.css";
+import { useLanguage } from "../../contexts/LanguageProvider";
 
-const highlights = [
-  { icon: "🏅", label: "Certified Physiotherapist" },
-  { icon: "⚡", label: "Sports Performance Coach" },
-  { icon: "🩺", label: "Injury Assessment Expert" },
-  { icon: "🔬", label: "Evidence-Based Methods" },
-];
+const icons = ["🏅", "⚡", "🩺", "🔬"];
 
 export default function About() {
+  const { t } = useLanguage();
   return (
     <section id="about" className="about section-padding animate-section">
       <div className="about-bg-accent" />
@@ -29,9 +26,14 @@ export default function About() {
             <div className="about-exp-badge">
               <span className="exp-number">2+</span>
               <span className="exp-label">
-                Years of
-                <br />
-                Excellence
+                {t("about.exp_label")
+                  .split("\\n")
+                  .map((line, idx) => (
+                    <React.Fragment key={idx}>
+                      {line}
+                      {idx === 0 && <br />}
+                    </React.Fragment>
+                  ))}
               </span>
             </div>
           </div>
@@ -43,37 +45,27 @@ export default function About() {
 
         {/* ---- Content Side ---- */}
         <div className="about-content">
-          <div className="section-tag">About NSA</div>
+          <div className="section-tag">{t("about.tag")}</div>
 
           <h2 className="section-title" style={{ textAlign: "left" }}>
-            Your Trusted <span>Rehabilitation</span> & Performance Hub
+            {t("about.title")}
           </h2>
 
-          <p className="about-text">
-            National Sports Academy is a premier sports injury rehabilitation
-            and performance center committed to helping athletes at every level
-            recover faster, move better, and perform at their peak.
-          </p>
-          <p className="about-text">
-            Led by certified physiotherapists and sports scientists, our team
-            combines cutting-edge diagnostic tools with personalized recovery
-            protocols. Whether you're recovering from a serious injury or
-            optimizing your athletic performance, we design science-backed
-            programs that get results.
-          </p>
+          <p className="about-text">{t("about.p1")}</p>
+          <p className="about-text">{t("about.p2")}</p>
 
           <div className="about-highlights">
-            {highlights.map((item, i) => (
+            {t("about.highlights").map((label, i) => (
               <div className="highlight-item" key={i}>
-                <span className="highlight-icon">{item.icon}</span>
-                <span className="highlight-label">{item.label}</span>
+                <span className="highlight-icon">{icons[i]}</span>
+                <span className="highlight-label">{label}</span>
               </div>
             ))}
           </div>
 
           <div className="about-cta-row">
             <a href="#contact" className="btn-primary">
-              <span>Start Your Recovery</span>
+              <span>{t("cta.start_recovery")}</span>
               <svg
                 width="16"
                 height="16"
@@ -86,7 +78,7 @@ export default function About() {
               </svg>
             </a>
             <a href="#services" className="btn-outline">
-              <span>Our Services</span>
+              <span>{t("cta.our_services")}</span>
             </a>
           </div>
         </div>

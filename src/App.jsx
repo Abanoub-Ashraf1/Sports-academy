@@ -9,6 +9,7 @@ import Testimonials from "./components/Testimonials/Testimonials";
 import Contact from "./components/Contact/Contact";
 import Footer from "./components/Footer/Footer";
 import "./styles/global.css";
+import { LanguageProvider } from "./contexts/LanguageProvider";
 
 function App() {
   useEffect(() => {
@@ -32,19 +33,21 @@ function App() {
   }, []);
 
   return (
-    <div className="app">
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Services />
-        <WhyChooseUs />
-        <Gallery />
-        <Testimonials />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <LanguageProvider>
+      <div className="app">
+        <Navbar />
+        <main>
+          <Hero />
+          <About />
+          <Services />
+          <WhyChooseUs />
+          <Gallery />
+          <Testimonials />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
+    </LanguageProvider>
   );
 }
 

@@ -125,6 +125,17 @@
   font-size: 0.85rem;
 }
 
+.lang-toggle {
+  margin-left: 12px;
+  padding: 6px 10px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
 /* ---- Hamburger ---- */
 .hamburger {
   display: none;

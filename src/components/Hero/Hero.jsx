@@ -1,13 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import "./Hero.css";
-
-/* ============================================================
-   HERO SECTION COMPONENT
-   Background image path: /images/hero.jpg
-   Replace the src in the <img> tag below to update the hero image.
-   ============================================================ */
+import { useLanguage } from "../../contexts/LanguageProvider";
 
 export default function Hero() {
+  const { t } = useLanguage();
   const heroRef = useRef(null);
 
   useEffect(() => {
@@ -43,47 +39,45 @@ export default function Hero() {
         <div className="hero-content">
           <div className="hero-badge">
             <span className="badge-dot" />
-            Elite Sports Rehabilitation
+            {t("hero.badge")}
           </div>
 
           <h1 className="hero-headline">
-            <span className="hero-line hero-line-1">Recover.</span>
-            <span className="hero-line hero-line-2">Perform.</span>
-            <span className="hero-line hero-line-3 accent-text">Dominate.</span>
+            <span className="hero-line hero-line-1">{t("hero.line1")}</span>
+            <span className="hero-line hero-line-2">{t("hero.line2")}</span>
+            <span className="hero-line hero-line-3 accent-text">
+              {t("hero.line3")}
+            </span>
           </h1>
 
-          <p className="hero-description">
-            Professional sports injury rehabilitation, recovery programs, and
-            performance enhancement tailored to every athlete. Your comeback
-            starts here.
-          </p>
+          <p className="hero-description">{t("hero.description")}</p>
 
           <div className="hero-stats">
             <div className="stat">
               <span className="stat-number">
                 500<span className="stat-plus">+</span>
               </span>
-              <span className="stat-label">Athletes Treated</span>
+              <span className="stat-label">{t("hero.stats_athletes")}</span>
             </div>
             <div className="stat-divider" />
             <div className="stat">
               <span className="stat-number">
                 98<span className="stat-plus">%</span>
               </span>
-              <span className="stat-label">Recovery Rate</span>
+              <span className="stat-label">{t("hero.stats_recovery")}</span>
             </div>
             <div className="stat-divider" />
             <div className="stat">
               <span className="stat-number">
                 2<span className="stat-plus">+</span>
               </span>
-              <span className="stat-label">Years Experience</span>
+              <span className="stat-label">{t("hero.stats_years")}</span>
             </div>
           </div>
 
           <div className="hero-actions">
             <a href="#contact" className="btn-primary">
-              <span>Book a Session</span>
+              <span>{t("cta.book_session")}</span>
               <svg
                 width="16"
                 height="16"
@@ -96,7 +90,7 @@ export default function Hero() {
               </svg>
             </a>
             <a href="#services" className="btn-outline">
-              <span>View Services</span>
+              <span>{t("cta.view_services")}</span>
             </a>
           </div>
         </div>
@@ -109,6 +103,12 @@ export default function Hero() {
                 src="/images/hero.png"
                 alt="Sports Rehabilitation Specialist"
                 className="hero-img"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+                onLoad={(e) => {
+                  e.currentTarget.classList.add("loaded");
+                }}
                 onError={(e) => {
                   e.target.style.display = "none";
                 }}
@@ -127,8 +127,8 @@ export default function Hero() {
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
               </svg>
               <div>
-                <strong>Elite Certified</strong>
-                <span>Sports Specialist</span>
+                <strong>{t("hero.badges")[0].title}</strong>
+                <span>{t("hero.badges")[0].subtitle}</span>
               </div>
             </div>
 
@@ -144,8 +144,8 @@ export default function Hero() {
                 <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
               </svg>
               <div>
-                <strong>Next-Level</strong>
-                <span>Recovery Plans</span>
+                <strong>{t("hero.badges")[1].title}</strong>
+                <span>{t("hero.badges")[1].subtitle}</span>
               </div>
             </div>
           </div>
@@ -155,7 +155,7 @@ export default function Hero() {
       {/* Scroll indicator */}
       <div className="scroll-indicator">
         <div className="scroll-line" />
-        <span>Scroll</span>
+        <span>{t("hero.scroll")}</span>
       </div>
     </section>
   );

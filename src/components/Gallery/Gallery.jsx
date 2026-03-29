@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./Gallery.css";
+import { useLanguage } from "../../contexts/LanguageProvider";
 
 const galleryItems = [
   {
@@ -47,6 +48,7 @@ const galleryItems = [
 ];
 
 export default function Gallery() {
+  const { t } = useLanguage();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [touchStart, setTouchStart] = useState(null);
@@ -57,7 +59,7 @@ export default function Gallery() {
       if (isTransitioning) return;
       setIsTransitioning(true);
       setActiveIndex((index + galleryItems.length) % galleryItems.length);
-      setTimeout(() => setIsTransitioning(false), 600);
+      setTimeout(() => setIsTransitioning(false), 480);
     },
     [isTransitioning],
   );
@@ -97,14 +99,9 @@ export default function Gallery() {
 
       <div className="container">
         <div className="section-header">
-          <div className="section-tag">Portfolio</div>
-          <h2 className="section-title">
-            Academy <span>Gallery</span>
-          </h2>
-          <p className="section-subtitle">
-            A glimpse inside the world of National Sports Academy — where
-            athletes train, recover, and reach their peak performance.
-          </p>
+          <div className="section-tag">{t("gallery.tag")}</div>
+          <h2 className="section-title">{t("gallery.title")}</h2>
+          <p className="section-subtitle">{t("gallery.subtitle")}</p>
           <div className="accent-line" />
         </div>
       </div>
@@ -202,14 +199,48 @@ export default function Gallery() {
 }
 
 function GalleryCard({ item, active, dim }) {
+  const [visible, setVisible] = useState(Boolean(active));
+  const [loaded, setLoaded] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (active) setVisible(true);
+  }, [active]);
+
+  useEffect(() => {
+    if (visible) return;
+    const node = ref.current;
+    if (!node) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisible(true);
+            obs.disconnect();
+          }
+        });
+      },
+      { rootMargin: "200px" },
+    );
+    obs.observe(node);
+    return () => obs.disconnect();
+  }, [ref, visible]);
+
+  const placeholder =
+    "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+
   return (
     <div
+      ref={ref}
       className={`gallery-card ${active ? "active" : ""} ${dim ? "dim" : ""}`}
     >
       <img
-        src={item.src}
+        src={visible ? item.src : placeholder}
         alt={item.title}
-        className="gallery-card-img"
+        className={`gallery-card-img ${loaded ? "loaded" : "loading"}`}
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setLoaded(true)}
         onError={(e) => {
           e.target.onerror = null;
           e.target.src = "/images/hero.png";

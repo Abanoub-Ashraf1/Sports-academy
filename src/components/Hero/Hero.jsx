@@ -100,7 +100,7 @@ export default function Hero() {
           <div className="hero-image-frame">
             <div className="hero-image-wrap">
               <img
-                src="/images/hero.png"
+                src="/images/hero.webp"
                 alt="Sports Rehabilitation Specialist"
                 className="hero-img"
                 loading="eager"

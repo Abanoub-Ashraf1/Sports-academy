@@ -14,9 +14,11 @@ export default function About() {
         <div className="about-image-side">
           <div className="about-image-frame">
             <img
-              src="/images/about.jpeg"
+              src="/images/about.webp"
               alt="Sports Rehabilitation Specialist"
               className="about-img"
+              loading="lazy"
+              decoding="async"
               onError={(e) => {
                 e.target.style.display = "none";
               }}
